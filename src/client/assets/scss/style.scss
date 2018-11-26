@@ -1,7 +1,7 @@
 body {
   #root {
     background: linear-gradient(#e66465, #9198e5);
-    height: 50vh;
+    height: 70vh;
   }
 
   .input-grp {
@@ -27,7 +27,7 @@ body {
     width: 100%;
     text-align: center;
     font-size: 40px;
-    color: #8c8c8c;
+    color: #dcdcdc;
   }
 }
 
@@ -58,7 +58,6 @@ body {
     .result-text {
       margin-top: 20px;
       width: 100%;
-      color: #4b4b4b;
     }
     .no-data-text {
       margin-top: 3vh;

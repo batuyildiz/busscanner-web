@@ -6,6 +6,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
+import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
@@ -32,11 +33,16 @@ const JourneyCard = (props) => {
     date,
     time,
     price,
-    url
+    url,
+    rate
   } = props;
   return (
     <Card className="card-item">
       <CardActionArea>
+        <CardHeader
+          title={`Discount rate: ${rate}%`}
+          style={{ color: '#471719' }}
+        />
         <CardMedia
           className="card-media"
           image={image}
@@ -51,12 +57,12 @@ const JourneyCard = (props) => {
             {text}
           </Typography>
           <Typography component="p">
-            <Icon color="primary" style={{ fontSize: 14, marginRight: 10 }}>map</Icon>
-            {`${duration} minutes`}
-          </Typography>
-          <Typography component="p">
             <Icon color="primary" style={{ fontSize: 14, marginRight: 10 }}>calendar_today</Icon>
             {`${date}`}
+          </Typography>
+          <Typography component="p">
+            <Icon color="primary" style={{ fontSize: 14, marginRight: 10 }}>map</Icon>
+            {`${duration}`}
           </Typography>
           <Typography component="p">
             <Icon color="primary" style={{ fontSize: 14, marginRight: 10 }}>restore</Icon>
@@ -89,6 +95,7 @@ JourneyCard.propTypes = {
   time: PropTypes.string.isRequired,
   price: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  rate: PropTypes.string.isRequired,
 };
 
 export default JourneyCard;

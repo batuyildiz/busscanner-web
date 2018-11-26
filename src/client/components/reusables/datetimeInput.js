@@ -45,6 +45,7 @@ class DatetimeInput extends Component {
           emptyLabel={emptyLabel || null}
           format="d MMM yyyy"
           autoOk
+          style={{ width: 167 }}
         />
       </MuiPickersUtilsProvider>
     );
