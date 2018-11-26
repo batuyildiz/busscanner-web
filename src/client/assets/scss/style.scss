@@ -4,6 +4,14 @@ body {
     height: 50vh;
   }
 
+  .input-grp {
+    border-right: .5px solid #949494;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
   .result-text {
     width: 100%;
     color: #ffffff;
@@ -36,6 +44,17 @@ body {
 //sm
 @media screen and (max-width: 991px) {
   body {
+    .input-grp {
+      border-right: .5px solid #949494;
+
+      &:nth-child(2) {
+        border-right: none;
+      }
+
+      &:last-child {
+        border-right: none;
+      }
+    }
     .result-text {
       margin-top: 20px;
       width: 100%;
@@ -55,6 +74,9 @@ body {
 //sm
 @media screen and (max-width: 768px) {
   body {
+    .input-grp {
+      border-right: none;
+    }
     .result-text {
       margin-top: 0;
       width: 100%;

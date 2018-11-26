@@ -10,7 +10,6 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRight: '0.5px solid #949494',
     marginBottom: '30px',
   },
   inputGroupStyleMobile: {
@@ -75,7 +74,7 @@ class Filters extends Component {
     return (
       <div className="col-lg-12" style={styles.filterBg}>
         <div className="row pt-5">
-          <div className="col-lg-3 col-md-6 col-sm-12" style={styles.inputGroupStyle}>
+          <div className="col-lg-3 col-md-6 col-sm-12 input-grp" style={styles.inputGroupStyle}>
             <DatetimeInput
               name="departureDate"
               label="Departure Date"
@@ -83,7 +82,7 @@ class Filters extends Component {
               type="date"
             />
           </div>
-          <div className="col-lg-3 col-md-6 col-sm-12" style={styles.inputGroupStyle}>
+          <div className="col-lg-3 col-md-6 col-sm-12 input-grp" style={styles.inputGroupStyle}>
             <DatetimeInput
               name="returnDate"
               label="Return Date"
@@ -95,7 +94,7 @@ class Filters extends Component {
               minDate={departureDate}
             />
           </div>
-          <div className="col-lg-3 col-md-6 col-sm-12" style={styles.inputGroupStyle}>
+          <div className="col-lg-3 col-md-6 col-sm-12 input-grp" style={styles.inputGroupStyle}>
             <SelectInput
               name="maxDuration"
               label="Journey Length"
@@ -105,7 +104,7 @@ class Filters extends Component {
               initialValue="0"
             />
           </div>
-          <div className="col-lg-3 col-md-6 col-sm-12" style={styles.inputGroupStyle}>
+          <div className="col-lg-3 col-md-6 col-sm-12 input-grp" style={styles.inputGroupStyle}>
             <SliderInput
               label="Max Price (per person)"
               onChange={val => onPriceChange(val)}
