@@ -1,6 +1,7 @@
 import React from 'react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './assets/scss/style.scss';
+import './assets/images/favicon.ico';
 import './assets/css/main.min.css';
 import './assets/css/plugins.min.css';
 
