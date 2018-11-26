@@ -10,13 +10,34 @@ const moduleObj = {
       use: ['babel-loader'],
     },
     {
-      test: /\.scss$/,
+      test: /\.(scss|css)$/,
       use: [{
         loader: 'style-loader'
       }, {
         loader: 'css-loader'
       }, {
         loader: 'sass-loader'
+      }]
+    },
+    {
+      test: /\.(png|jpg|gif)$/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: '[path][name].[ext]',
+            publicPath: 'assets/images'
+          }
+        }
+      ]
+    },
+    {
+      test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+      use: [{
+        loader: 'file-loader',
+        options: {
+          outputPath: 'font'
+        }
       }]
     }
   ],
