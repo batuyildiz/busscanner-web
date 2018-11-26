@@ -44,6 +44,7 @@ class DatetimeInput extends Component {
           minDate={minDate}
           emptyLabel={emptyLabel || null}
           format="d MMM yyyy"
+          autoOk
         />
       </MuiPickersUtilsProvider>
     );
