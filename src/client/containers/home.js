@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Header from '../components/header';
 import Filters from '../components/filters';
 import JourneyCard from '../components/journeyCard';
 import { fetchData, showLoading } from '../actions/homeActionCreators';
 import { humanizeISODate } from '../utils/helpers';
-import LinearProgress from '@material-ui/core/LinearProgress';
 
 // import { actionCreators as homeActionCreators } from '../../ducks/home';
 
@@ -112,7 +112,7 @@ class Home extends Component {
                       url={`https://shop.global.flixbus.com/search?departureCity=${item.route.from_station.city.id}&arrivalCity=${item.route.from_station.city.id}&rideDate=26.11.2018`}
                     />
                   )) : (
-                  <div className="no-data-text">{dataFetched && 'Sorry! No journeys found.'}</div>)
+                    <div className="no-data-text">{dataFetched && 'Sorry! No journeys found.'}</div>)
               }
             </div>
           </div>
