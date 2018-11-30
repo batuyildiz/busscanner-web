@@ -37,15 +37,15 @@ const durations = [
   },
   {
     name: 'Close (< 2 hours)',
+    value: '1'
+  },
+  {
+    name: 'Middle (2 - 4 hours)',
     value: '2'
   },
   {
-    name: 'Middle (< 4 hours)',
-    value: '4'
-  },
-  {
-    name: 'Far (+6 hours)',
-    value: '6'
+    name: 'Far (+4 hours)',
+    value: '3'
   },
 ];
 

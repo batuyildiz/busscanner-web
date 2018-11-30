@@ -16,7 +16,8 @@ export default function dataReducer(state = initialState, action) {
         ...state,
         data: action.data.reduce((acc, cur) => {
           const rate = parseInt(
-            ((parseFloat(cur.route.average_fare) - parseFloat(cur.fare)) / cur.fare) * 100, 0
+            ((parseFloat(cur.route.average_fare) - parseFloat(cur.fare)) / cur.average_fare)
+            * 100, 0
           );
           if (rate > 0) {
             acc = [...acc, {

@@ -64,7 +64,7 @@ class Home extends Component {
       departure_date: departureDate.toISOString()
         .split('T')[0],
       max_price: maxPrice.toString(),
-      max_duration: maxDuration === 0 ? '100000' : (maxDuration * 60).toString(),
+      max_duration: maxDuration,
     };
 
     // TODO: handle form errors
