@@ -98,7 +98,6 @@ class Home extends Component {
             <div className="row">
               {data.length > 0
                 ? data
-                  .sort((a, b) => b.discount_percent - a.discount_percent)
                   .map((item, index) => (
                     <JourneyCard
                       key={`${item.title}_${index}`}
