@@ -16,7 +16,7 @@ class StepSlider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 5,
+      value: 30,
     };
   }
 
@@ -41,7 +41,7 @@ class StepSlider extends React.Component {
         <Slider
           classes={{ container: classes.slider }}
           value={value}
-          min={5}
+          min={30}
           max={100}
           step={5}
           onChange={(e, v) => this.handleChange(e, v)}

@@ -11,7 +11,7 @@ export function fetchData(data) {
   return (dispatch) => {
     dispatch(showLoading(true));
     fetch(
-      `https://api.busscanner.net/journeys?departure_date=${data.departure_date}&max_price=${data.max_price}&duration_class=${data.max_duration}`,
+      `https://api.busscanner.net/journeys?departure_date=${data.departure_date}&max_price=${data.max_price}&duration_class=${data.max_duration}${data.return_date ? '&returndate=' + data.return_date : ''}`,
       {
         method: 'GET',
         headers: {

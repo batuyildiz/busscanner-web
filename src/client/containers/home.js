@@ -20,7 +20,7 @@ class Home extends Component {
       departureTime: '',
       arrivalTime: '',
       departurePlace: '',
-      maxPrice: 5,
+      maxPrice: 30,
       maxDuration: 0,
     };
   }
@@ -63,6 +63,8 @@ class Home extends Component {
     const payload = {
       departure_date: departureDate.toISOString()
         .split('T')[0],
+      return_date: returnDate ? returnDate.toISOString()
+        .split('T')[0] : null,
       max_price: maxPrice.toString(),
       max_duration: maxDuration,
     };
@@ -81,6 +83,7 @@ class Home extends Component {
           <Header />
           <Filters
             onDepartureDateChange={(val, type) => this.handleDateChange(type, 'departure', val)}
+            onDepartureChange={() => {}}
             onReturnDateChange={(val, type) => this.handleDateChange(type, 'return', val)}
             onDeparturePlaceChange={val => this.handleDeparturePlaceChange(val)}
             onPriceChange={val => this.handlePriceChange(val)}
@@ -103,13 +106,13 @@ class Home extends Component {
                       key={`${item.title}_${index}`}
                       text={`From ${item.route.from_station.name} to ${item.route.to_station.name} `}
                       title={item.route.to_station.city.name}
-                      image={item.route.to_station.image || 'https://i0.1616.ro/media/2/2621/33241/15520423/2/fli.jpg'}
+                      image={item.route.to_station.city.image || 'https://i0.1616.ro/media/2/2621/33241/15520423/2/fli.jpg'}
                       duration={`${parseInt(item.duration_minutes / 60, 0)} hours ${item.duration_minutes % 60 !== 0 ? `${(item.duration_minutes % 60).toString()} minutes` : ''}`}
                       date={humanizeISODate(item.departure)}
                       time={item.departure.split('T')[1].substring(0, item.departure.split('T')[1].length - 3)}
                       price={item.fare}
                       rate={item.discount_percent.toString()}
-                      url={`https://shop.global.flixbus.com/search?departureCity=${item.route.from_station.city.id}&arrivalCity=${item.route.from_station.city.id}&rideDate=26.11.2018`}
+                      url={`https://shop.global.flixbus.com/search?departureCity=${item.route.from_station.city.id}&arrivalCity=${item.route.to_station.city.id}&rideDate=26.11.2018`}
                     />
                   )) : (
                     <div className="no-data-text">{dataFetched && 'Sorry! No journeys found.'}</div>)
