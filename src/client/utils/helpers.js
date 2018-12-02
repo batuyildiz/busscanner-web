@@ -27,3 +27,8 @@ export function flixizeISODate(dateString) {
   }
   return `${dt}.${month}.${year}`;
 }
+
+export function toISOStringBetter(dateObj) {
+  const tzoffset = (new Date()).getTimezoneOffset() * 60000;
+  return new Date(dateObj - tzoffset).toISOString().slice(0, -1);
+}

@@ -7,7 +7,7 @@ import Header from '../components/header';
 import Filters from '../components/filters';
 import JourneyCard from '../components/journeyCard';
 import { fetchData, showLoading } from '../actions/homeActionCreators';
-import { humanizeISODate, flixizeISODate } from '../utils/helpers';
+import { humanizeISODate, flixizeISODate, toISOStringBetter } from '../utils/helpers';
 
 // import { actionCreators as homeActionCreators } from '../../ducks/home';
 
@@ -62,9 +62,9 @@ class Home extends Component {
     } = this.state;
     const { searchJourneys, showLoadingBar } = this.props;
     const payload = {
-      departure_date: departureDate.toISOString()
+      departure_date: toISOStringBetter(departureDate)
         .split('T')[0],
-      return_date: returnDate ? returnDate.toISOString()
+      return_date: returnDate ? toISOStringBetter(returnDate)
         .split('T')[0] : null,
       max_price: maxPrice.toString(),
       max_duration: maxDuration,
@@ -114,7 +114,7 @@ class Home extends Component {
                       time={item.departure.split('T')[1].substring(0, item.departure.split('T')[1].length - 3)}
                       price={item.fare}
                       rate={item.discount_percent.toString()}
-                      url={`https://shop.global.flixbus.com/search?departureCity=${item.route.from_station.city.flix_id}&arrivalCity=${item.route.to_station.city.flix_id}&rideDate=${flixizeISODate(item.departure)}${returnDate ? '&backRide = 1&backRideDate='+flixizeISODate(returnDate) : ''}`}
+                      url={`https://shop.global.flixbus.com/search?departureCity=${item.route.from_station.city.flix_id}&arrivalCity=${item.route.to_station.city.flix_id}&rideDate=${flixizeISODate(item.departure)}${returnDate ? '&backRide=1&backRideDate='+flixizeISODate(returnDate) : ''}`}
                       isTwoWay={returnDate ? humanizeISODate(returnDate) : ''}
                     />
                   )) : (
