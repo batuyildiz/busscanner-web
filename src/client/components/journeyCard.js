@@ -15,6 +15,12 @@ const styles = {
   media: {
     height: 140,
   },
+  icons: {
+    fontSize: 16,
+    marginRight: 10,
+    position: 'relative',
+    top: '3px',
+  }
 };
 
 function handleClick(url) {
@@ -34,7 +40,8 @@ const JourneyCard = (props) => {
     time,
     price,
     url,
-    rate
+    rate,
+    isTwoWay,
   } = props;
   return (
     <Card className="card-item">
@@ -50,27 +57,38 @@ const JourneyCard = (props) => {
           style={styles.media}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
+          <Typography variant="h5" component="h2">
             {title}
           </Typography>
-          <Typography variant="caption" component="p">
+          <Typography gutterBottom variant="caption" component="p">
             {text}
           </Typography>
           <Typography component="p">
-            <Icon color="primary" style={{ fontSize: 14, marginRight: 10 }}>calendar_today</Icon>
-            {`${date}`}
+            <Icon color="primary" style={styles.icons}>calendar_today</Icon>
+            {date}
+            {isTwoWay ? (
+              <Icon
+                color="inherit"
+                style={{
+                  fontSize: 16, marginRight: 7, marginLeft: 7, position: 'relative', top: '3px'
+                }}
+              >
+                swap_horiz
+              </Icon>
+            ) : ''}
+            {isTwoWay}
           </Typography>
           <Typography component="p">
-            <Icon color="primary" style={{ fontSize: 14, marginRight: 10 }}>map</Icon>
+            <Icon color="primary" style={styles.icons}>map</Icon>
             {`${duration}`}
           </Typography>
           <Typography component="p">
-            <Icon color="primary" style={{ fontSize: 14, marginRight: 10 }}>restore</Icon>
+            <Icon color="primary" style={styles.icons}>restore</Icon>
             {`${time}`}
           </Typography>
           <Typography component="p">
-            <Icon color="primary" style={{ fontSize: 14, marginRight: 10 }}>money</Icon>
-            {`€ ${price}`}
+            <Icon color="primary" style={styles.icons}>money</Icon>
+            {`${isTwoWay ? 'from ' : ''}€ ${price}`}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -96,6 +114,7 @@ JourneyCard.propTypes = {
   price: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   rate: PropTypes.string.isRequired,
+  isTwoWay: PropTypes.string.isRequired
 };
 
 export default JourneyCard;

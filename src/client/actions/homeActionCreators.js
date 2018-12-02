@@ -11,7 +11,7 @@ export function fetchData(data) {
   return (dispatch) => {
     dispatch(showLoading(true));
     fetch(
-      `https://api.busscanner.net/journeys?departure_date=${data.departure_date}&max_price=${data.max_price}&duration_class=${data.max_duration}${data.return_date ? '&returndate=' + data.return_date : ''}`,
+      `https://api.busscanner.net/journeys?departure_date=${data.departure_date}&max_price=${data.max_price}&duration_class=${data.max_duration}${data.return_date ? `&return_date=${data.return_date}` : ''}`,
       {
         method: 'GET',
         headers: {
@@ -21,12 +21,21 @@ export function fetchData(data) {
     ).then(res => res.json())
       .then(
         (res) => {
-          // console.log(res);
+          console.log(res);
           if (res) {
             dispatch(showLoading(false));
             return dispatch({
               type: 'FETCH_DATA_SUCCESS',
-              data: res
+              data: data.return_date ? res
+                .reduce((acc, cur) => [
+                  ...acc,
+                  {
+                    ...cur.go,
+                    fare: cur.total_price.toString(),
+                    discount_percent: cur.discount_percent
+                  }
+                ], [])
+                : res,
             });
           }
           dispatch(showLoading(false));
