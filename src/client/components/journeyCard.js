@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -24,8 +23,7 @@ const styles = {
   }
 };
 
-function handleClick(url) {
-  const { order, flixuid } = this.props;
+function handleClick(url, order, flixuid) {
   Mixpanel.track('ClickThroughSuccess', { order, flix_uid: flixuid });
   window.open(
     url,
@@ -45,6 +43,8 @@ const JourneyCard = (props) => {
     url,
     rate,
     isTwoWay,
+    order,
+    flixuid,
   } = props;
   return (
     <Card className="card-item">
@@ -99,7 +99,7 @@ const JourneyCard = (props) => {
         <Button size="small" color="primary">
           Share
         </Button>
-        <Button size="small" color="primary" onClick={() => handleClick(url)}>
+        <Button size="small" color="primary" onClick={() => handleClick(url, order, flixuid)}>
           Go to ticket
         </Button>
       </CardActions>
