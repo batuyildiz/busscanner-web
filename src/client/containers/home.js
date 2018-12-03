@@ -8,6 +8,7 @@ import Filters from '../components/filters';
 import JourneyCard from '../components/journeyCard';
 import { fetchData, showLoading } from '../actions/homeActionCreators';
 import { humanizeISODate, flixizeISODate, toISOStringBetter } from '../utils/helpers';
+import Mixpanel from '../utils/mixpanel';
 
 // import { actionCreators as homeActionCreators } from '../../ducks/home';
 
@@ -25,13 +26,16 @@ class Home extends Component {
     };
   }
 
+  componentDidMount() {
+    Mixpanel.track('PageView', { page_name: 'Homepage' });
+  }
+
   handleDateChange(type, direction, value) {
     const key = `${direction}${type.charAt(0)
       .toUpperCase() + type.slice(1)}`;
     this.setState({
       [key]: value,
     });
-    console.log(value);
   }
 
   handleDeparturePlaceChange(value) {
@@ -73,6 +77,14 @@ class Home extends Component {
     // TODO: handle form errors
     if (departureDate !== null && maxPrice !== null && maxDuration !== null) {
       searchJourneys(payload);
+      Mixpanel.track('Search', {
+        departure_date: toISOStringBetter(departureDate)
+          .split('T')[0],
+        return_date: returnDate ? toISOStringBetter(returnDate)
+          .split('T')[0] : null,
+        max_price: maxPrice,
+        max_duration: maxDuration
+      });
     }
   }
 
@@ -114,7 +126,7 @@ class Home extends Component {
                       time={item.departure.split('T')[1].substring(0, item.departure.split('T')[1].length - 3)}
                       price={item.fare}
                       rate={item.discount_percent.toString()}
-                      url={`https://shop.global.flixbus.com/search?departureCity=${item.route.from_station.city.flix_id}&arrivalCity=${item.route.to_station.city.flix_id}&rideDate=${flixizeISODate(item.departure)}${returnDate ? '&backRide=1&backRideDate='+flixizeISODate(returnDate) : ''}`}
+                      url={`https://shop.global.flixbus.com/search?departureCity=${item.route.from_station.city.flix_id}&arrivalCity=${item.route.to_station.city.flix_id}&rideDate=${flixizeISODate(item.departure)}${returnDate ? `&backRide=1&backRideDate=${flixizeISODate(returnDate)}` : ''}`}
                       isTwoWay={returnDate ? humanizeISODate(returnDate) : ''}
                     />
                   )) : (

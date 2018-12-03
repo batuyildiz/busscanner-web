@@ -10,6 +10,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
+import Mixpanel from '../utils/mixpanel';
 
 const styles = {
   media: {
@@ -24,6 +25,7 @@ const styles = {
 };
 
 function handleClick(url) {
+  Mixpanel.track('ClickThroughSuccess');
   window.open(
     url,
     '_blank'
@@ -47,7 +49,7 @@ const JourneyCard = (props) => {
     <Card className="card-item">
       <CardActionArea>
         <CardHeader
-          title={`Discount rate: ${rate}%`}
+          title={`Save up to ${rate}%`}
           style={{ color: '#471719' }}
         />
         <CardMedia

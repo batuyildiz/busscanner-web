@@ -4,6 +4,7 @@ import DatetimeInput from './reusables/datetimeInput';
 import SelectInput from './reusables/selectInput';
 import SliderInput from './reusables/sliderInput';
 import Button from './reusables/button';
+import Mixpanel from '../utils/mixpanel';
 
 const styles = {
   inputGroupStyle: {
@@ -59,7 +60,7 @@ const durations = [
 const cities = [
   {
     name: 'Munich',
-    value: '0'
+    value: 0
   },
 ];
 
@@ -86,9 +87,11 @@ class Filters extends Component {
   }
 
   changeState(scState) {
+    const { city } = this.state;
     this.setState({
       screenState: scState,
     });
+    Mixpanel.track('SearchInitiate', { city: cities[city].name });
   }
 
   render() {
