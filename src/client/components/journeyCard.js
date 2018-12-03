@@ -25,7 +25,8 @@ const styles = {
 };
 
 function handleClick(url) {
-  Mixpanel.track('ClickThroughSuccess');
+  const { order } = this.props;
+  Mixpanel.track('ClickThroughSuccess', { order });
   window.open(
     url,
     '_blank'
@@ -116,7 +117,8 @@ JourneyCard.propTypes = {
   price: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   rate: PropTypes.string.isRequired,
-  isTwoWay: PropTypes.string.isRequired
+  isTwoWay: PropTypes.string.isRequired,
+  order: PropTypes.number.isRequired
 };
 
 export default JourneyCard;
