@@ -129,6 +129,7 @@ class Home extends Component {
                       url={`https://shop.global.flixbus.com/search?departureCity=${item.route.from_station.city.flix_id}&arrivalCity=${item.route.to_station.city.flix_id}&rideDate=${flixizeISODate(item.departure)}${returnDate ? `&backRide=1&backRideDate=${flixizeISODate(returnDate)}` : ''}`}
                       isTwoWay={returnDate ? humanizeISODate(returnDate) : ''}
                       order={index}
+                      flixuid={item.flix_uid}
                     />
                   )) : (
                     <div className="no-data-text">{dataFetched && 'Sorry! No journeys found.'}</div>)

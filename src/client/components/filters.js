@@ -60,7 +60,7 @@ const durations = [
 const cities = [
   {
     name: 'Munich',
-    value: 0
+    value: '0'
   },
 ];
 

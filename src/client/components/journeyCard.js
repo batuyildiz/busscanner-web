@@ -25,8 +25,8 @@ const styles = {
 };
 
 function handleClick(url) {
-  const { order } = this.props;
-  Mixpanel.track('ClickThroughSuccess', { order });
+  const { order, flixuid } = this.props;
+  Mixpanel.track('ClickThroughSuccess', { order, flix_uid: flixuid });
   window.open(
     url,
     '_blank'
@@ -118,7 +118,8 @@ JourneyCard.propTypes = {
   url: PropTypes.string.isRequired,
   rate: PropTypes.string.isRequired,
   isTwoWay: PropTypes.string.isRequired,
-  order: PropTypes.number.isRequired
+  order: PropTypes.number.isRequired,
+  flixuid: PropTypes.string.isRequired,
 };
 
 export default JourneyCard;
