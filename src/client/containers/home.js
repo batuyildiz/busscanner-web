@@ -77,14 +77,16 @@ class Home extends Component {
     // TODO: handle form errors
     if (departureDate !== null && maxPrice !== null && maxDuration !== null) {
       searchJourneys(payload, offset);
-      Mixpanel.track('Search', {
-        departure_date: toISOStringBetter(departureDate)
-          .split('T')[0],
-        return_date: returnDate ? toISOStringBetter(returnDate)
-          .split('T')[0] : null,
-        max_price: maxPrice,
-        max_duration: maxDuration
-      });
+      if (offset === 0) {
+        Mixpanel.track('Search', {
+          departure_date: toISOStringBetter(departureDate)
+            .split('T')[0],
+          return_date: returnDate ? toISOStringBetter(returnDate)
+            .split('T')[0] : null,
+          max_price: maxPrice,
+          max_duration: maxDuration
+        });
+      }
     }
   }
 
@@ -99,7 +101,7 @@ class Home extends Component {
     return (
       <div className="container">
         <div className="bg">
-          <Header />
+          <Header/>
           <Filters
             onDepartureDateChange={(val, type) => this.handleDateChange(type, 'departure', val)}
             onDepartureChange={() => {
@@ -112,7 +114,7 @@ class Home extends Component {
           />
         </div>
         {loading ? (
-          <LinearProgress />
+          <LinearProgress/>
         ) : (
           <div className="col-lg-12 pt-5">
             <h3 className="result-text" style={{ textAlign: dataFetched ? 'left' : 'center' }}>
@@ -123,7 +125,10 @@ class Home extends Component {
                 pageStart={0}
                 loadMore={page => this.handleSearchClick(page)}
                 hasMore={hasMore}
-                loader={(<div style={{ width: '100%', textAlign: 'center' }}><CircularProgress color="primary" key={0} /></div>)}
+                loader={(<div style={{
+                  width: '100%',
+                  textAlign: 'center'
+                }}><CircularProgress color="primary" key={0}/></div>)}
                 initialLoad={false}
               >
                 <div className="row">
@@ -148,7 +153,7 @@ class Home extends Component {
                   }
                 </div>
               </InfiniteScroll>) : (
-                <div className="no-data-text">{dataFetched && 'Sorry! No journeys found.'}</div>
+              <div className="no-data-text">{dataFetched && 'Sorry! No journeys found.'}</div>
             )}
           </div>
         )
