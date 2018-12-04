@@ -96,9 +96,6 @@ const JourneyCard = (props) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
         <Button size="small" color="primary" onClick={() => handleClick(url, order, flixuid)}>
           Go to ticket
         </Button>
