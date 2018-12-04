@@ -7,11 +7,13 @@ export function showLoading(show) {
   };
 }
 
-export function fetchData(data) {
+export function fetchData(data, offset) {
   return (dispatch) => {
-    dispatch(showLoading(true));
+    if (offset === 0) {
+      dispatch(showLoading(true));
+    }
     fetch(
-      `https://api.busscanner.net/journeys?departure_date=${data.departure_date}&max_price=${data.max_price}&duration_class=${data.max_duration}${data.return_date ? `&return_date=${data.return_date}` : ''}`,
+      `https://api.busscanner.net/journeys?departure_date=${data.departure_date}&max_price=${data.max_price}&duration_class=${data.max_duration}${data.return_date ? `&return_date=${data.return_date}` : ''}&limit=${8 * (offset + 1)}&offset=0`,
       {
         method: 'GET',
         headers: {
@@ -21,11 +23,13 @@ export function fetchData(data) {
     ).then(res => res.json())
       .then(
         (res) => {
-          console.log(res);
           if (res) {
-            dispatch(showLoading(false));
+            if (offset === 0) {
+              dispatch(showLoading(false));
+            }
+            const type = 'FETCH_DATA_SUCCESS';
             return dispatch({
-              type: 'FETCH_DATA_SUCCESS',
+              type,
               data: data.return_date ? res
                 .reduce((acc, cur) => [
                   ...acc,
@@ -38,7 +42,9 @@ export function fetchData(data) {
                 : res,
             });
           }
-          dispatch(showLoading(false));
+          if (offset === 0) {
+            dispatch(showLoading(false));
+          }
           return dispatch({
             type: 'FETCH_DATA_FAILURE',
           });
