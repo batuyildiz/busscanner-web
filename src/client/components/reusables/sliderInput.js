@@ -16,7 +16,7 @@ class StepSlider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 5,
+      value: 10,
     };
   }
 
