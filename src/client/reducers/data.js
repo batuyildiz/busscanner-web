@@ -15,7 +15,7 @@ export default function dataReducer(state = initialState, action) {
     case 'FETCH_DATA_SUCCESS':
       return {
         ...state,
-        hasMore: state.data.length < action.data.length,
+        hasMore: state.data.length < action.data.length || action.reset,
         data: action.data,
         dataFetched: true,
       };

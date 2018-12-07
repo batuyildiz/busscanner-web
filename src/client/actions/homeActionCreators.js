@@ -40,6 +40,7 @@ export function fetchData(data, offset) {
                   }
                 ], [])
                 : res,
+              reset: offset === 0,
             });
           }
           if (offset === 0) {

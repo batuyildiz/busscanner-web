@@ -1,9 +1,10 @@
 import React from 'react';
+import img from '../assets/images/busscanner-w.png';
 
 const Header = () => (
-  <div className="row pt-5">
+  <div className="row pt-3">
     <div className="col-12 col-md-12">
-      <h4 className="mb-2" style={{ color: '#ffffff' }}> Easiest way to find bus trip deals! </h4>
+      <img src={img} alt="logo" width={180} />
     </div>
   </div>
 );

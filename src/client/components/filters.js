@@ -30,7 +30,7 @@ const styles = {
     borderRadius: '8px',
   },
   titleText: {
-    color: '#2a2a2a',
+    color: '#949494',
     fontFamily: 'Open Sans, Arial, Sans Serif',
     fontSize: '20px',
     textAlign: 'center',
@@ -105,7 +105,7 @@ class Filters extends Component {
     } = this.props;
     return (
       <div className="col-lg-12" style={styles.filterBg}>
-        <div className="row pt-4 pb-3">
+        <div className="row p-4">
           <div className="titleText" style={styles.titleText}>
             {screenState === 0
               ? 'Start by telling us where you are' : 'Now tell us when you want to leave Munich'}

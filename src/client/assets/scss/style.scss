@@ -1,7 +1,18 @@
 body {
   #root {
-    background: linear-gradient(#e66465, #9198e5);
-    height: 70vh;
+    //background: linear-gradient(#e66465, #9198e5);
+    background-image: url("/assets/images/bg.jpg");
+    background-size: cover;
+    background-clip: content-box;
+    height: 100vh;
+  }
+
+  .container {
+    height: 100%;
+  }
+
+  .bg {
+    min-height: 100%;
   }
 
   .input-grp {
@@ -28,6 +39,16 @@ body {
     text-align: center;
     font-size: 40px;
     color: #dcdcdc;
+  }
+
+  .footer {
+    text-align: center;
+
+    .copyright {
+      text-align: center;
+      padding-top: 16px;
+      font-size: 11px;
+    }
   }
 }
 

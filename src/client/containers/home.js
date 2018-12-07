@@ -5,6 +5,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import InfiniteScroll from 'react-infinite-scroller';
 import Header from '../components/header';
+import Footer from '../components/footer';
 import Filters from '../components/filters';
 import JourneyCard from '../components/journeyCard';
 import { fetchData, showLoading } from '../actions/homeActionCreators';
@@ -23,6 +24,7 @@ class Home extends Component {
       departurePlace: '',
       maxPrice: 15,
       maxDuration: 0,
+      searchCounter: 0,
     };
   }
 
@@ -63,8 +65,10 @@ class Home extends Component {
       departurePlace,
       maxDuration,
       maxPrice,
+      searchCounter
     } = this.state;
     const { searchJourneys, showLoadingBar } = this.props;
+    this.setState({ searchCounter: searchCounter + 1 });
     const payload = {
       departure_date: toISOStringBetter(departureDate)
         .split('T')[0],
@@ -97,11 +101,16 @@ class Home extends Component {
       loading,
       hasMore
     } = this.props;
-    const { returnDate } = this.state;
+    const { returnDate, searchCounter } = this.state;
     return (
       <div className="container">
         <div className="bg">
-          <Header/>
+          <Header />
+          <div className="row mt-5 mb-5">
+            <div className="col-12 col-md-12" style={{ textAlign: 'center' }}>
+              <h1 style={{ color: '#ffffff', textShadow: '0 1px 5px rgba(0,0,0,.6)' }}> Easiest way to find bus trip deals! </h1>
+            </div>
+          </div>
           <Filters
             onDepartureDateChange={(val, type) => this.handleDateChange(type, 'departure', val)}
             onDepartureChange={() => {
@@ -112,30 +121,33 @@ class Home extends Component {
             onMaxDurationChange={val => this.handleMaxDurationChange(val)}
             onSearchClick={() => this.handleSearchClick(0)}
           />
-        </div>
         {loading ? (
-          <LinearProgress/>
+          <LinearProgress style={{ borderRadius: '10px' }} />
         ) : (
           <div className="col-lg-12 pt-5">
-            <h3 className="result-text" style={{ textAlign: dataFetched ? 'left' : 'center' }}>
-              {dataFetched ? 'Results:' : 'Make a search to get started!'}
-            </h3>
             {data.length > 0 ? (
               <InfiniteScroll
                 pageStart={0}
                 loadMore={page => this.handleSearchClick(page)}
                 hasMore={hasMore}
-                loader={(<div style={{
-                  width: '100%',
-                  textAlign: 'center'
-                }}><CircularProgress color="primary" key={0}/></div>)}
+                loader={(
+                  <div
+                    style={{
+                      width: '100%',
+                      textAlign: 'center'
+                    }}
+                    key={`prgrs_${searchCounter}`}
+                  >
+                    <CircularProgress color="primary" />
+                  </div>
+                )}
                 initialLoad={false}
               >
                 <div className="row">
                   {data
                     .map((item, index) => (
                       <JourneyCard
-                        key={`${item.title}_${index}`}
+                        key={`${item.title}_${index}_${searchCounter}`}
                         text={`From ${item.route.from_station.name} to ${item.route.to_station.name} `}
                         title={item.route.to_station.city.name}
                         image={item.route.to_station.city.image || 'https://i0.1616.ro/media/2/2621/33241/15520423/2/fli.jpg'}
@@ -153,11 +165,13 @@ class Home extends Component {
                   }
                 </div>
               </InfiniteScroll>) : (
-              <div className="no-data-text">{dataFetched && 'Sorry! No journeys found.'}</div>
+                <div className="no-data-text">{dataFetched && 'Sorry! No journeys found.'}</div>
             )}
           </div>
         )
         }
+        </div>
+        <Footer />
       </div>
     );
   }

@@ -25,8 +25,9 @@ const moduleObj = {
         {
           loader: 'file-loader',
           options: {
-            name: '[path][name].[ext]',
-            publicPath: 'assets/images'
+            name: '[name].[ext]',
+            publicPath: 'assets/images/',
+            outputPath: 'assets/images',
           }
         }
       ]

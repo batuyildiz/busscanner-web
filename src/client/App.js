@@ -4,6 +4,7 @@ import './assets/scss/style.scss';
 import './assets/images/favicon.ico';
 import './assets/css/main.min.css';
 import './assets/css/plugins.min.css';
+import './assets/images/bg.jpg';
 
 
 const theme = createMuiTheme({
