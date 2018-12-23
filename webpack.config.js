@@ -41,7 +41,7 @@ const moduleObj = {
         }
       }]
     }
-  ],
+  ]
 };
 
 const client = {
