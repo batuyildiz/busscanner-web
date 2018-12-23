@@ -1,6 +1,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const moduleObj = {
   rules: [
@@ -61,8 +62,9 @@ const client = {
   module: moduleObj,
   plugins: [
     new HtmlWebPackPlugin({
-      template: 'src/client/index.html'
-    })
+      template: 'src/client/index.html',
+    }),
+    new CopyWebpackPlugin([{ from: 'src/client/_redirects', to: '' }], {})
   ]
 };
 
