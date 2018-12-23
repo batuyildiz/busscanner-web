@@ -19,6 +19,13 @@ export default function dataReducer(state = initialState, action) {
         data: action.data,
         dataFetched: true,
       };
+    case 'RESET_DATA':
+      return {
+        data: [],
+        loading: false,
+        dataFetched: false,
+        hasMore: false,
+      };
     case 'LOAD_MORE_SUCCESS':
       return {
         ...state,

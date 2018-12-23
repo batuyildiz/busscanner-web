@@ -7,6 +7,12 @@ export function showLoading(show) {
   };
 }
 
+export function resetData() {
+  return {
+    type: 'RESET_DATA',
+  };
+}
+
 export function fetchData(data, offset) {
   return (dispatch) => {
     if (offset === 0) {

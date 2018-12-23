@@ -13,6 +13,11 @@
         "react"
     ],
     "extends": ["airbnb"],
+    "globals": {
+        "document": true,
+        "sessionStorage": true,
+        "window": true
+      },
     "rules": {
         "comma-dangle": 0,
         "react/jsx-uses-vars": 1,

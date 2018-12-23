@@ -1,24 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route } from 'react-router';
-import { ConnectedRouter } from 'connected-react-router';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { createBrowserHistory } from 'history';
 import App from './App';
 import configureStore from './stores/configureStore';
 import Home from './containers/home';
-
+import Policy from './containers/policy';
 
 const store = configureStore();
-const history = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
+    <Router>
       <App>
-        <Route path="/" component={Home} />
+        <Route exact path="/" component={Home} />
+        <Route path="/privacy" render={props => <Policy {...props} type="privacy" />} />
+        <Route path="/cookie" render={props => <Policy {...props} type="cookie" />} />
+        <Route path="/tos" render={props => <Policy {...props} type="tos" />} />
       </App>
-    </ConnectedRouter>
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

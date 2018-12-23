@@ -5,7 +5,7 @@ import './assets/images/favicon.ico';
 import './assets/css/main.min.css';
 import './assets/css/plugins.min.css';
 import './assets/images/bg.jpg';
-
+import CookieConsent from './components/cookieConsent';
 
 const theme = createMuiTheme({
   palette: {
@@ -15,7 +15,12 @@ const theme = createMuiTheme({
 });
 
 function App({ children }) {
-  return <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>;
+  return (
+    <MuiThemeProvider theme={theme}>
+      {children}
+      <CookieConsent />
+    </MuiThemeProvider>
+  );
 }
 
 export default App;

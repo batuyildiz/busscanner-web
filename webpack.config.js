@@ -51,7 +51,14 @@ const client = {
   target: 'web',
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'dist/public')
+    path: path.resolve(__dirname, 'dist/public'),
+    publicPath: '/'
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'public'),
+    watchContentBase: true,
+    publicPath: '/dist/',
+    historyApiFallback: true,
   },
   module: moduleObj,
   plugins: [
