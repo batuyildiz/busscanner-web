@@ -52,13 +52,11 @@ const client = {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist/public'),
-    publicPath: '/'
   },
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    watchContentBase: true,
-    publicPath: '/dist/',
     historyApiFallback: true,
+    contentBase: './',
+    hot: true
   },
   module: moduleObj,
   plugins: [
