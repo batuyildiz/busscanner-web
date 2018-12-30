@@ -7,6 +7,28 @@ body {
     height: 100vh;
   }
 
+  .header-container {
+    display: flex;
+    padding-top: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    justify-content: space-between;
+
+    .header-nav {
+      button {
+        text-decoration: none;
+        color: white;
+        line-height: 45px;
+      }
+    }
+  }
+
+  .header-contact {
+    color: white;
+    padding-top: 20px;
+    float: right;
+  }
+
   .scroll-top-btn {
     background-color: rgb(255, 0, 72) !important;
     bottom: 60px !important;
