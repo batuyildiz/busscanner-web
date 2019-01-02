@@ -38,7 +38,7 @@ class Header extends Component {
         </div>
         <Collapse in={showContact}>
           <div className="header-contact">
-            contact@busscanner.net | Pihlaka 97 Ülenurme Tartumaa 61714 | +4915145839541
+            contact@busscanner.net
           </div>
         </Collapse>
       </div>
