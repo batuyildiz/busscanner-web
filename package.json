@@ -35,6 +35,7 @@
     "@material-ui/lab": "^3.0.0-alpha.23",
     "connected-react-router": "^5.0.0",
     "date-fns": "^2.0.0-alpha.16",
+    "event-stream": "^4.0.1",
     "express": "^4.16.4",
     "history": "^4.7.2",
     "isomorphic-fetch": "^2.2.1",
@@ -53,7 +54,8 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "update": "^0.7.4"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
