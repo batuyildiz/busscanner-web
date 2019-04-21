@@ -32,3 +32,8 @@ export function toISOStringBetter(dateObj) {
   const tzoffset = (new Date()).getTimezoneOffset() * 60000;
   return new Date(dateObj - tzoffset).toISOString().slice(0, -1);
 }
+
+export function extractWeekday(dateObj) {
+  const tzoffset = (new Date()).getTimezoneOffset() * 60000;
+  return (new Date(dateObj - tzoffset).getDay() + 1).toString();
+}

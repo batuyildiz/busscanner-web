@@ -9,8 +9,8 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 import Filters from '../components/filters';
 import JourneyCard from '../components/journeyCard';
-import { fetchData, showLoading, resetData } from '../actions/homeActionCreators';
-import { humanizeISODate, flixizeISODate, toISOStringBetter } from '../utils/helpers';
+import { fetchData, fetchCities, resetData } from '../actions/homeActionCreators';
+import { humanizeISODate, flixizeISODate, toISOStringBetter, extractWeekday } from '../utils/helpers';
 import Mixpanel from '../utils/mixpanel';
 
 
@@ -23,9 +23,13 @@ class Home extends Component {
       departureTime: '',
       arrivalTime: '',
       departurePlace: '',
+      departureDay: '1',
+      returnDay: '1',
+      arrivalPlace: '',
       maxPrice: 15,
       maxDuration: 0,
       searchCounter: 0,
+      tabIndex: 0,
     };
   }
 
@@ -36,6 +40,12 @@ class Home extends Component {
   resetData() {
     const { resetHome } = this.props;
     resetHome();
+  }
+
+  handleTabChange(value) {
+    this.setState({
+      tabIndex: value,
+    });
   }
 
   handleDateChange(type, direction, value) {
@@ -52,9 +62,27 @@ class Home extends Component {
     });
   }
 
+  handleArrivalPlaceChange(value) {
+    this.setState({
+      arrivalPlace: value,
+    });
+  }
+
   handleMaxDurationChange(value) {
     this.setState({
       maxDuration: value,
+    });
+  }
+
+  handleDepartureDayChange(value) {
+    this.setState({
+      departureDay: value,
+    });
+  }
+
+  handleReturnDayChange(value) {
+    this.setState({
+      returnDay: value,
     });
   }
 
@@ -64,38 +92,46 @@ class Home extends Component {
     });
   }
 
+  handleCitySearch(val) {
+    const { onCitySearch } = this.props;
+    onCitySearch(val);
+  }
+
   handleSearchClick(offset) {
     const {
       departureDate,
       returnDate,
       departurePlace,
+      departureDay,
+      returnDay,
       maxDuration,
       maxPrice,
-      searchCounter
+      searchCounter,
+      tabIndex,
+      arrivalPlace
     } = this.state;
     const { searchJourneys } = this.props;
     this.setState({ searchCounter: searchCounter + 1 });
-    const payload = {
+    const payload = tabIndex === 0 ? {
       departure_date: toISOStringBetter(departureDate)
         .split('T')[0],
       return_date: returnDate ? toISOStringBetter(returnDate)
         .split('T')[0] : null,
       max_price: maxPrice.toString(),
       max_duration: maxDuration,
+    } : {
+      departure_weekday: departureDay,
+      return_weekday: returnDay,
+      max_price: maxPrice.toString(),
+      max_duration: maxDuration,
+      to_city_id: arrivalPlace
     };
 
     // TODO: handle form errors
     if (departureDate !== null && maxPrice !== null && maxDuration !== null) {
-      searchJourneys(payload, offset);
+      searchJourneys(payload, offset, tabIndex === 0 ? 'journeys' : 'destinations');
       if (offset === 0) {
-        Mixpanel.track('Search', {
-          departure_date: toISOStringBetter(departureDate)
-            .split('T')[0],
-          return_date: returnDate ? toISOStringBetter(returnDate)
-            .split('T')[0] : null,
-          max_price: maxPrice,
-          max_duration: maxDuration
-        });
+        Mixpanel.track('Search', payload);
       }
     }
   }
@@ -105,7 +141,8 @@ class Home extends Component {
       data,
       dataFetched,
       loading,
-      hasMore
+      hasMore,
+      citySuggestions
     } = this.props;
     const { returnDate, searchCounter } = this.state;
     return (
@@ -119,13 +156,19 @@ class Home extends Component {
           </div>
           <Filters
             onDepartureDateChange={(val, type) => this.handleDateChange(type, 'departure', val)}
+            onDepartureDayChange={val => this.handleDepartureDayChange(val)}
+            onReturnDayChange={val => this.handleReturnDayChange(val)}
             onDepartureChange={() => {
             }}
             onReturnDateChange={(val, type) => this.handleDateChange(type, 'return', val)}
             onDeparturePlaceChange={val => this.handleDeparturePlaceChange(val)}
+            onArrivalPlaceChange={val => this.handleArrivalPlaceChange(val)}
             onPriceChange={val => this.handlePriceChange(val)}
             onMaxDurationChange={val => this.handleMaxDurationChange(val)}
             onSearchClick={() => this.handleSearchClick(0)}
+            onTabChange={val => this.handleTabChange(val)}
+            onCitySearch={val => this.handleCitySearch(val)}
+            citySuggestions={citySuggestions}
           />
           {loading ? (
             <LinearProgress style={{ borderRadius: '10px' }} />
@@ -162,8 +205,8 @@ class Home extends Component {
                           time={item.departure.split('T')[1].substring(0, item.departure.split('T')[1].length - 3)}
                           price={item.fare}
                           rate={item.discount_percent.toString()}
-                          url={`https://shop.global.flixbus.com/search?departureCity=${item.route.from_station.city.flix_id}&arrivalCity=${item.route.to_station.city.flix_id}&rideDate=${flixizeISODate(item.departure)}${returnDate ? `&backRide=1&backRideDate=${flixizeISODate(returnDate)}` : ''}`}
-                          isTwoWay={returnDate ? humanizeISODate(returnDate) : ''}
+                          url={`https://shop.global.flixbus.com/search?departureCity=${item.route.from_station.city.flix_id}&arrivalCity=${item.route.to_station.city.flix_id}&rideDate=${flixizeISODate(item.departure)}${item.returnDate ? `&backRide=1&backRideDate=${flixizeISODate(item.returnDate)}` : ''}`}
+                          isTwoWay={item.returnDate ? humanizeISODate(item.returnDate) : ''}
                           order={index}
                           flixuid={item.flix_uid}
                         />
@@ -186,10 +229,12 @@ class Home extends Component {
 
 Home.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  citySuggestions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   dataFetched: PropTypes.bool.isRequired,
   loading: PropTypes.bool.isRequired,
   hasMore: PropTypes.bool.isRequired,
   searchJourneys: PropTypes.func.isRequired,
+  onCitySearch: PropTypes.func.isRequired,
   resetHome: PropTypes.func.isRequired,
 };
 
@@ -198,24 +243,29 @@ function mapStateToProps(state) {
     data,
     dataFetched,
     loading,
-    hasMore
+    hasMore,
+    citySuggestions
   } = state.data;
   return {
     data,
     dataFetched,
     loading,
-    hasMore
+    hasMore,
+    citySuggestions
   };
 }
 
 
 function mapDispatchToProps(dispatch) {
   return {
-    searchJourneys: (data, offset) => {
-      dispatch(fetchData(data, offset));
+    searchJourneys: (data, offset, endpoint) => {
+      dispatch(fetchData(data, offset, endpoint));
     },
     resetHome: () => {
       dispatch(resetData());
+    },
+    onCitySearch: (val) => {
+      dispatch(fetchCities(val));
     }
   };
 }

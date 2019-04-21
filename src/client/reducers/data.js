@@ -3,6 +3,7 @@ const initialState = {
   loading: false,
   dataFetched: false,
   hasMore: false,
+  citySuggestions: [],
 };
 
 export default function dataReducer(state = initialState, action) {
@@ -18,6 +19,11 @@ export default function dataReducer(state = initialState, action) {
         hasMore: state.data.length < action.data.length || action.reset,
         data: action.data,
         dataFetched: true,
+      };
+    case 'FETCH_CITY_SUCCESS':
+      return {
+        ...state,
+        citySuggestions: action.data,
       };
     case 'RESET_DATA':
       return {

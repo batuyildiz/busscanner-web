@@ -13,13 +13,20 @@ export function resetData() {
   };
 }
 
-export function fetchData(data, offset) {
+export function fetchData(data, offset, endpoint) {
+  const params = Object.keys(data).reduce((acc, cur) => {
+    if (data[cur] && data[cur].toString().length > 0) {
+      const paramString = `${cur}=${data[cur]}`;
+      return [...acc, paramString];
+    }
+    return acc;
+  }, []);
   return (dispatch) => {
     if (offset === 0) {
       dispatch(showLoading(true));
     }
     fetch(
-      `https://api.busscanner.net/journeys?departure_date=${data.departure_date}&max_price=${data.max_price}&duration_class=${data.max_duration}${data.return_date ? `&return_date=${data.return_date}` : ''}&limit=${8 * (offset + 1)}&offset=0`,
+      `https://api.busscanner.net/${endpoint}?${params.join('&')}`,
       {
         method: 'GET',
         headers: {
@@ -34,18 +41,33 @@ export function fetchData(data, offset) {
               dispatch(showLoading(false));
             }
             const type = 'FETCH_DATA_SUCCESS';
+            if (endpoint === 'journeys') {
+              return dispatch({
+                type,
+                data: data.return_date ? res
+                  .reduce((acc, cur) => [
+                    ...acc,
+                    {
+                      ...cur.go,
+                      fare: cur.total_price.toString(),
+                      discount_percent: cur.discount_percent,
+                      returnDate: cur.back.departure
+                    }
+                  ], [])
+                  : res,
+                reset: offset === 0,
+              });
+            }
             return dispatch({
               type,
-              data: data.return_date ? res
-                .reduce((acc, cur) => [
-                  ...acc,
-                  {
-                    ...cur.go,
-                    fare: cur.total_price.toString(),
-                    discount_percent: cur.discount_percent
-                  }
-                ], [])
-                : res,
+              data: [
+                {
+                  ...res.go,
+                  fare: res.total_price.toString(),
+                  discount_percent: res.discount_percent,
+                  returnDate: res.back.departure
+                }
+              ],
               reset: offset === 0,
             });
           }
@@ -54,6 +76,34 @@ export function fetchData(data, offset) {
           }
           return dispatch({
             type: 'FETCH_DATA_FAILURE',
+          });
+        }
+      );
+  };
+}
+
+export function fetchCities(val) {
+  return (dispatch) => {
+    fetch(
+      `https://api.busscanner.net/cities?q=${val}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      }
+    ).then(res => res.json())
+      .then(
+        (res) => {
+          if (res) {
+            const type = 'FETCH_CITY_SUCCESS';
+            return dispatch({
+              type,
+              data: res,
+            });
+          }
+          return dispatch({
+            type: 'FETCH_CITY_FAILURE',
           });
         }
       );

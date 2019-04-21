@@ -88,6 +88,10 @@ body {
   }
 }
 
+[data-swipeable] {
+  overflow: hidden!important;
+}
+
 .cookie-consent {
   align-items: center;
   background: rgb(53, 53, 53);

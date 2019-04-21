@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import DatetimeInput from './reusables/datetimeInput';
 import SelectInput from './reusables/selectInput';
 import SliderInput from './reusables/sliderInput';
+import TabsContainer from './reusables/tabs';
 import Button from './reusables/button';
+import AutoSuggest from './reusables/autosuggest';
 import Mixpanel from '../utils/mixpanel';
 
 const styles = {
@@ -28,6 +30,7 @@ const styles = {
     backgroundColor: '#ffffff',
     boxShadow: '0 2px 27px 0 rgba(0, 0, 0, .13)',
     borderRadius: '8px',
+    padding: 0,
   },
   titleText: {
     color: '#949494',
@@ -40,7 +43,7 @@ const styles = {
 
 const durations = [
   {
-    name: 'Anywhere',
+    name: "Doesn't matter",
     value: '0'
   },
   {
@@ -54,6 +57,37 @@ const durations = [
   {
     name: 'Far (+4 hours)',
     value: '3'
+  },
+];
+
+const weekdays = [
+  {
+    name: 'Monday',
+    value: '1'
+  },
+  {
+    name: 'Tuesday',
+    value: '2'
+  },
+  {
+    name: 'Wednesday',
+    value: '3'
+  },
+  {
+    name: 'Thursday',
+    value: '4'
+  },
+  {
+    name: 'Friday',
+    value: '5'
+  },
+  {
+    name: 'Saturday',
+    value: '6'
+  },
+  {
+    name: 'Sunday',
+    value: '7'
   },
 ];
 
@@ -86,6 +120,11 @@ class Filters extends Component {
     onDepartureDateChange(val, type);
   }
 
+  suggestCities(val) {
+    const { onCitySearch } = this.props;
+    onCitySearch(val);
+  }
+
   changeState(scState) {
     const { city } = this.state;
     this.setState({
@@ -100,33 +139,21 @@ class Filters extends Component {
       onReturnDateChange,
       onMaxDurationChange,
       onDepartureChange,
+      onDepartureDayChange,
+      onReturnDayChange,
       onPriceChange,
       onSearchClick,
+      onArrivalPlaceChange,
+      citySuggestions,
+      onTabChange,
     } = this.props;
-    return (
-      <div className="col-lg-12" style={styles.filterBg}>
-        <div className="row p-4">
-          <div className="titleText" style={styles.titleText}>
-            {screenState === 0
-              ? 'Start by telling us where you are' : 'Now tell us when you want to leave Munich'}
-          </div>
-        </div>
 
-        {screenState === 0 ? (
-          <div className="row pt-1">
-            <div className="col-lg-12 col-md-12 col-sm-12 input-grp" style={styles.inputGroupStyle}>
-              <SelectInput
-                name="departureCity"
-                label=""
-                options={cities}
-                onChange={val => this.onCityChange(val)}
-                fixedWidth={400}
-                initialValue="0"
-              />
-            </div>
-          </div>
-        ) : (
-          <div className="row pt-3">
+    const tabs = [
+      {
+        label: 'I know when...',
+        icon: 'event',
+        content: (
+          <div className="row pt-3" style={{ width: '100%' }} key="tab_1_c">
             <div className="col-lg-3 col-md-6 col-sm-12 input-grp" style={styles.inputGroupStyle}>
               <DatetimeInput
                 name="departureDate"
@@ -164,6 +191,82 @@ class Filters extends Component {
               />
             </div>
           </div>
+        ),
+      },
+      {
+        label: 'I know where...',
+        icon: 'rv_hookup',
+        content: (
+          <div className="row pt-3" style={{ width: '100%' }} key="tab_2_c">
+            <div className="col-lg-3 col-md-6 col-sm-12 input-grp" style={styles.inputGroupStyle}>
+              <AutoSuggest
+                name="arrivalPlace"
+                label="Arrival Place"
+                onSelect={val => onArrivalPlaceChange(val)}
+                getSuggestions={val => this.suggestCities(val)}
+                suggestions={citySuggestions}
+              />
+            </div>
+            <div className="col-lg-3 col-md-6 col-sm-12 input-grp" style={styles.inputGroupStyle}>
+              <SelectInput
+                name="departureDay"
+                label="Departure Day"
+                options={weekdays}
+                onChange={val => onDepartureDayChange(val)}
+                fixedWidth={300}
+                initialValue="5"
+              />
+            </div>
+            <div className="col-lg-3 col-md-6 col-sm-12 input-grp" style={styles.inputGroupStyle}>
+              <SelectInput
+                name="returnDay"
+                label="Return Day"
+                options={weekdays}
+                onChange={val => onReturnDayChange(val)}
+                fixedWidth={300}
+                initialValue="7"
+              />
+            </div>
+            <div className="col-lg-3 col-md-6 col-sm-12 input-grp" style={styles.inputGroupStyle}>
+              <SliderInput
+                label="Max Price (per person)"
+                onChange={val => onPriceChange(val)}
+              />
+            </div>
+          </div>
+        ),
+      },
+    ];
+    return (
+      <div className="col-lg-12" style={styles.filterBg}>
+        {screenState === 0
+        && (
+        <div className="row p-4">
+          <div className="titleText" style={styles.titleText}>
+            Start by telling us where you are
+          </div>
+        </div>
+        )
+        }
+
+        {screenState === 0 ? (
+          <div className="row pt-1">
+            <div className="col-lg-12 col-md-12 col-sm-12 input-grp" style={styles.inputGroupStyle}>
+              <SelectInput
+                name="departureCity"
+                label=""
+                options={cities}
+                onChange={val => this.onCityChange(val)}
+                fixedWidth={400}
+                initialValue="0"
+              />
+            </div>
+          </div>
+        ) : (
+          <TabsContainer
+            tabs={tabs}
+            handleTabsChange={val => onTabChange(val)}
+          />
         )}
         {screenState === 0 ? (
           <div className="row pb-3 pr-5 pl-5">
@@ -195,12 +298,22 @@ class Filters extends Component {
 
 Filters.propTypes = {
   onDepartureDateChange: PropTypes.func.isRequired,
+  onDepartureDayChange: PropTypes.func.isRequired,
+  onReturnDayChange: PropTypes.func.isRequired,
   onReturnDateChange: PropTypes.func.isRequired,
   onDeparturePlaceChange: PropTypes.func.isRequired,
   onPriceChange: PropTypes.func.isRequired,
+  onTabChange: PropTypes.func.isRequired,
   onMaxDurationChange: PropTypes.func.isRequired,
   onDepartureChange: PropTypes.func.isRequired,
   onSearchClick: PropTypes.func.isRequired,
+  onCitySearch: PropTypes.func.isRequired,
+  onArrivalPlaceChange: PropTypes.func.isRequired,
+  citySuggestions: PropTypes.arrayOf(PropTypes.shape({}))
+};
+
+Filters.defaultProps = {
+  citySuggestions: [],
 };
 
 export default Filters;
