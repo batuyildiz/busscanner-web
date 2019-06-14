@@ -31,6 +31,10 @@ function handleClick(url, order, flixuid) {
   );
 }
 
+function handleShare(flixuid) {
+  // copy the link
+}
+
 const JourneyCard = (props) => {
   const {
     title,
@@ -98,6 +102,9 @@ const JourneyCard = (props) => {
       <CardActions>
         <Button size="small" color="primary" onClick={() => handleClick(url, order, flixuid)}>
           Go to ticket
+        </Button>
+        <Button size="small" color="secondary" onClick={() => handleShare(flixuid)}>
+          Share
         </Button>
       </CardActions>
     </Card>

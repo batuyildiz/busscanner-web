@@ -17,14 +17,16 @@ import Mixpanel from '../utils/mixpanel';
 class Home extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
+    g = props;
     this.state = {
       departureDate: new Date(),
       returnDate: '',
       departureTime: '',
       arrivalTime: '',
       departurePlace: '',
-      departureDay: '1',
-      returnDay: '1',
+      departureDay: '5',
+      returnDay: '7',
       arrivalPlace: '',
       maxPrice: 15,
       maxDuration: 0,
@@ -118,12 +120,12 @@ class Home extends Component {
       return_date: returnDate ? toISOStringBetter(returnDate)
         .split('T')[0] : null,
       max_price: maxPrice.toString(),
-      max_duration: maxDuration,
+      duration_class: maxDuration,
     } : {
       departure_weekday: departureDay,
       return_weekday: returnDay,
       max_price: maxPrice.toString(),
-      max_duration: maxDuration,
+      duration_class: maxDuration,
       to_city_id: arrivalPlace
     };
 
