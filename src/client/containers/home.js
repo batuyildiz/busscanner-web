@@ -21,6 +21,8 @@ class Home extends Component {
     if (props['match']['params'].length){
         singleFlixUid = props['match']['params']['id']
     }
+    console.log(props['match']);
+    console.log(props['match']['params'].length);
     console.log('singleFlixUid');
       console.log(singleFlixUid);
     this.state = {
