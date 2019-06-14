@@ -19,8 +19,11 @@ class Home extends Component {
 
     var singleFlixUid = null;
     if (props['match']['params'].length){
+
         singleFlixUid = props['match']['params']['id']
     }
+    console.log('singleFlixUid');
+      console.log(singleFlixUid);
     this.state = {
       departureDate: new Date(),
       returnDate: '',
@@ -43,6 +46,7 @@ class Home extends Component {
   }
 
   resetData() {
+      console.log('resetdata');
     const { resetHome } = this.props;
     resetHome();
   }
@@ -116,6 +120,8 @@ class Home extends Component {
       arrivalPlace,
         singleFlixUid
     } = this.state;
+    console.log('handleSearchClickflixuid');
+    console.log(singleFlixUid);
     const { searchJourneys } = this.props;
     this.setState({ searchCounter: searchCounter + 1 });
     const payload = tabIndex === 0 ? {
