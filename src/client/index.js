@@ -17,7 +17,7 @@ ReactDOM.render(
         <Route path="/privacy" render={props => <Policy {...props} type="privacy" />} />
         <Route path="/cookie" render={props => <Policy {...props} type="cookie" />} />
         <Route path="/tos" render={props => <Policy {...props} type="tos" />} />
-        <Route path="/(:flixuid)" component={Home} />
+        <Route path="/:id" component={Home} />
       </App>
     </Router>
   </Provider>,
