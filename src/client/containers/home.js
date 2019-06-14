@@ -18,7 +18,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     console.log(props);
-    g = props;
+    window.g = props;
     this.state = {
       departureDate: new Date(),
       returnDate: '',
