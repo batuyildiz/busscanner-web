@@ -16,9 +16,11 @@ import Mixpanel from '../utils/mixpanel';
 
 class Home extends Component {
   constructor(props) {
-    super(props);
-    console.log(props);
-    window.g = props;
+
+    var singleFlixUid = null;
+    if (props['match']['params'].length){
+        singleFlixUid = props['match']['params']['id']
+    }
     this.state = {
       departureDate: new Date(),
       returnDate: '',
@@ -32,6 +34,7 @@ class Home extends Component {
       maxDuration: 0,
       searchCounter: 0,
       tabIndex: 0,
+        singleFlixUid: singleFlixUid,
     };
   }
 
@@ -110,11 +113,13 @@ class Home extends Component {
       maxPrice,
       searchCounter,
       tabIndex,
-      arrivalPlace
+      arrivalPlace,
+        singleFlixUid
     } = this.state;
     const { searchJourneys } = this.props;
     this.setState({ searchCounter: searchCounter + 1 });
     const payload = tabIndex === 0 ? {
+        flix_uid : singleFlixUid,
       departure_date: toISOStringBetter(departureDate)
         .split('T')[0],
       return_date: returnDate ? toISOStringBetter(returnDate)
