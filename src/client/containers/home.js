@@ -16,13 +16,13 @@ import Mixpanel from '../utils/mixpanel';
 
 class Home extends Component {
   constructor(props) {
-
-    // var singleFlixUid = null;
-    // if (props['match']['params'].length){
-    //     singleFlixUid = props['match']['params']['id']
-    // }
-    // console.log('singleFlixUid');
-    //   console.log(singleFlixUid);
+    super(props);
+    var singleFlixUid = null;
+    if (props['match']['params'].length){
+        singleFlixUid = props['match']['params']['id']
+    }
+    console.log('singleFlixUid');
+      console.log(singleFlixUid);
     this.state = {
       departureDate: new Date(),
       returnDate: '',
@@ -36,7 +36,7 @@ class Home extends Component {
       maxDuration: 0,
       searchCounter: 0,
       tabIndex: 0,
-        // singleFlixUid: singleFlixUid,
+        singleFlixUid: singleFlixUid,
     };
   }
 
@@ -117,14 +117,14 @@ class Home extends Component {
       searchCounter,
       tabIndex,
       arrivalPlace
-        // singleFlixUid
+        singleFlixUid
     } = this.state;
-    // console.log('handleSearchClickflixuid');
-    // console.log(singleFlixUid);
+    console.log('handleSearchClickflixuid');
+    console.log(singleFlixUid);
     const { searchJourneys } = this.props;
     this.setState({ searchCounter: searchCounter + 1 });
     const payload = tabIndex === 0 ? {
-        // flix_uid : singleFlixUid,
+        flix_uid : singleFlixUid,
       departure_date: toISOStringBetter(departureDate)
         .split('T')[0],
       return_date: returnDate ? toISOStringBetter(returnDate)
