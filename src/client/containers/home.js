@@ -116,7 +116,7 @@ class Home extends Component {
       maxPrice,
       searchCounter,
       tabIndex,
-      arrivalPlace
+      arrivalPlace,
         singleFlixUid
     } = this.state;
     console.log('handleSearchClickflixuid');
