@@ -160,6 +160,8 @@ class Home extends Component {
       citySuggestions
     } = this.props;
     const { returnDate, searchCounter, singleFlixUid } = this.state;
+    console.log('rendering..');
+    console.log(singleFlixUid);
     return (
       <div className="container">
         <div className="bg">
