@@ -25,14 +25,15 @@ class Home extends Component {
     console.log(props['match']['params'].length);
     console.log('singleFlixUid');
       console.log(singleFlixUid);
+      //# 1 (Sunday) to 7 (Saturday).
     this.state = {
       departureDate: new Date(),
       returnDate: '',
       departureTime: '',
       arrivalTime: '',
       departurePlace: '',
-      departureDay: '5',
-      returnDay: '7',
+      departureDay: '6',
+      returnDay: '1',
       arrivalPlace: '',
       maxPrice: 15,
       maxDuration: 0,

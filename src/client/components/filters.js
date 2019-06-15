@@ -63,31 +63,31 @@ const durations = [
 const weekdays = [
   {
     name: 'Monday',
-    value: '1'
-  },
-  {
-    name: 'Tuesday',
     value: '2'
   },
   {
-    name: 'Wednesday',
+    name: 'Tuesday',
     value: '3'
   },
   {
-    name: 'Thursday',
+    name: 'Wednesday',
     value: '4'
   },
   {
-    name: 'Friday',
+    name: 'Thursday',
     value: '5'
   },
   {
-    name: 'Saturday',
+    name: 'Friday',
     value: '6'
   },
   {
-    name: 'Sunday',
+    name: 'Saturday',
     value: '7'
+  },
+  {
+    name: 'Sunday',
+    value: '1'
   },
 ];
 
@@ -214,7 +214,7 @@ class Filters extends Component {
                 options={weekdays}
                 onChange={val => onDepartureDayChange(val)}
                 fixedWidth={300}
-                initialValue="5"
+                initialValue="6"
               />
             </div>
             <div className="col-lg-3 col-md-6 col-sm-12 input-grp" style={styles.inputGroupStyle}>
@@ -224,7 +224,7 @@ class Filters extends Component {
                 options={weekdays}
                 onChange={val => onReturnDayChange(val)}
                 fixedWidth={300}
-                initialValue="7"
+                initialValue="1"
               />
             </div>
             <div className="col-lg-3 col-md-6 col-sm-12 input-grp" style={styles.inputGroupStyle}>
