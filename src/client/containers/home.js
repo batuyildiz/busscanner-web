@@ -171,7 +171,7 @@ class Home extends Component {
               <h1 style={{ color: '#ffffff', textShadow: '0 1px 5px rgba(0,0,0,.6)' }}> Easiest way to find bus trip deals! </h1>
             </div>
           </div>
-            { singleFlixUid ? (
+            { singleFlixUid ? <div></div> : (
           <Filters
             onDepartureDateChange={(val, type) => this.handleDateChange(type, 'departure', val)}
             onDepartureDayChange={val => this.handleDepartureDayChange(val)}
@@ -188,7 +188,7 @@ class Home extends Component {
             onCitySearch={val => this.handleCitySearch(val)}
             citySuggestions={citySuggestions}
           />
-            ) : <div></div>}
+            )}
           {loading ? (
             <LinearProgress style={{ borderRadius: '10px' }} />
           ) : (
