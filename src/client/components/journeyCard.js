@@ -52,6 +52,7 @@ const JourneyCard = (props) => {
     order,
     flixuid,
   } = props;
+  let sharelink = 'https://busscanner.net/' + flixuid;
   return (
     <Card className="card-item">
       <CardActionArea>
@@ -105,8 +106,8 @@ const JourneyCard = (props) => {
         <Button size="small" color="primary" onClick={() => handleClick(url, order, flixuid)}>
           Go to ticket
         </Button>
-        <CopyToClipboard text={url}>
-        <Button size="small" color="secondary">
+        <CopyToClipboard text={sharelink}>
+        <Button size="small" color="secondary" onCopy={() => alert('Link has been copied!')}>
           Copy Link
         </Button>
         </CopyToClipboard>
