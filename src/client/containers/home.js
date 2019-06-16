@@ -45,7 +45,11 @@ class Home extends Component {
 
   componentDidMount() {
     Mixpanel.track('PageView', { page_name: 'Homepage' });
-    // this.handleSearchClick(0);
+    const {
+        singleFlixUid
+    } = this.state;
+    if(singleFlixUid){
+    this.handleSearchClick(0);}
   }
 
   resetData() {
