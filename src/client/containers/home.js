@@ -45,7 +45,7 @@ class Home extends Component {
 
   componentDidMount() {
     Mixpanel.track('PageView', { page_name: 'Homepage' });
-    this.handleSearchClick(0);
+    // this.handleSearchClick(0);
   }
 
   resetData() {
