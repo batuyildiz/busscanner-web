@@ -42,8 +42,7 @@ export function fetchData(data, offset, endpoint) {
             }
             const type = 'FETCH_DATA_SUCCESS';
             if (endpoint === 'journeys') {
-              console.log('FETCH_DATA_SUCCESS');
-              console.log(data);
+
               return dispatch({
                 type,
                 data: data.return_date ? res
@@ -60,9 +59,9 @@ export function fetchData(data, offset, endpoint) {
                 reset: offset === 0,
               });
             }
-            return dispatch({
-              type,
-              data: res.reduce((acc, cur) => [
+            console.log('FETCH_DATA_SUCCESS');
+            console.log(data);
+            let mydata = res.reduce((acc, cur) => [
                     ...acc,
                     {
                       ...cur.go,
@@ -70,7 +69,11 @@ export function fetchData(data, offset, endpoint) {
                       discount_percent: cur.discount_percent,
                       returnDate: cur.back.departure
                     }
-                  ], []),
+                  ], []);
+            console.log(mydata);
+            return dispatch({
+              type,
+              data: mydata,
               reset: offset === 0,
             });
           }

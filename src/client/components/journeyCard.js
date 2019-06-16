@@ -10,6 +10,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 import Mixpanel from '../utils/mixpanel';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+
 
 const styles = {
   media: {
@@ -103,9 +105,11 @@ const JourneyCard = (props) => {
         <Button size="small" color="primary" onClick={() => handleClick(url, order, flixuid)}>
           Go to ticket
         </Button>
-        <Button size="small" color="secondary" onClick={() => handleShare(flixuid)}>
-          Share
+        <CopyToClipboard text={url}>
+        <Button size="small" color="secondary">
+          Copy Link
         </Button>
+        </CopyToClipboard>
       </CardActions>
     </Card>
   );
