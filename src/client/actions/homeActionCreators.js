@@ -42,6 +42,8 @@ export function fetchData(data, offset, endpoint) {
             }
             const type = 'FETCH_DATA_SUCCESS';
             // if (endpoint === 'journeys') {
+              console.log('FETCH_DATA_SUCCESS');
+              console.log(data);
               return dispatch({
                 type,
                 data: data.return_date ? res
