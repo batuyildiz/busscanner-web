@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Icon from '@material-ui/core/Icon';
 import Mixpanel from '../utils/mixpanel';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { toast } from 'react-toastify';
 
 
 const styles = {
@@ -106,8 +107,8 @@ const JourneyCard = (props) => {
         <Button size="small" color="primary" onClick={() => handleClick(url, order, flixuid)}>
           Go to ticket
         </Button>
-        <CopyToClipboard text={sharelink}>
-        <Button size="small" color="secondary" onCopy={() => alert('Link has been copied!')}>
+        <CopyToClipboard text={sharelink} onCopy={() => toast('Link has been copied!')}>
+        <Button size="small" color="secondary">
           Copy Link
         </Button>
         </CopyToClipboard>

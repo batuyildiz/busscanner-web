@@ -6,6 +6,8 @@ import './assets/css/main.min.css';
 import './assets/css/plugins.min.css';
 import './assets/images/bg.jpg';
 import CookieConsent from './components/cookieConsent';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const theme = createMuiTheme({
   palette: {
@@ -13,6 +15,8 @@ const theme = createMuiTheme({
     secondary: { main: '#50ecef' },
   },
 });
+
+toast.configure();
 
 function App({ children }) {
   return (
