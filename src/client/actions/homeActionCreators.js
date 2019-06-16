@@ -41,7 +41,7 @@ export function fetchData(data, offset, endpoint) {
               dispatch(showLoading(false));
             }
             const type = 'FETCH_DATA_SUCCESS';
-            if (endpoint === 'journeys') {
+            // if (endpoint === 'journeys') {
               return dispatch({
                 type,
                 data: data.return_date ? res
@@ -57,19 +57,19 @@ export function fetchData(data, offset, endpoint) {
                   : res,
                 reset: offset === 0,
               });
-            }
-            return dispatch({
-              type,
-              data: [
-                {
-                  ...res.go,
-                  fare: res.total_price.toString(),
-                  discount_percent: res.discount_percent,
-                  returnDate: res.back.departure
-                }
-              ],
-              reset: offset === 0,
-            });
+            // }
+            // return dispatch({
+            //   type,
+            //   data: [
+            //     {
+            //       ...res.go,
+            //       fare: res.total_price.toString(),
+            //       discount_percent: res.discount_percent,
+            //       returnDate: res.back.departure
+            //     }
+            //   ],
+            //   reset: offset === 0,
+            // });
           }
           if (offset === 0) {
             dispatch(showLoading(false));
